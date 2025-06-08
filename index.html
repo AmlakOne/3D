@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سه‌بعدی دیوارها | AmlakOne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            direction: rtl;
+        }
+
+        .controls h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .controls button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #45a049;
+        }
+
+        .controls button:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            direction: rtl;
+            font-size: 14px;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .controls, .info-panel {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .controls button {
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- پنل کنترل -->
+    <div class="controls">
+        <h2>کنترل‌های نما</h2>
+        <button id="resetView">بازنشانی دید</button>
+        <button id="toggleGrid">نمایش/پنهان‌سازی گرید</button>
+        <button id="toggleWireframe">نمایش/پنهان‌سازی وایرفریم</button>
+    </div>
+
+    <!-- پنل اطلاعات -->
+    <div class="info-panel">
+        <div id="wallInfo">اطلاعات دیوار: -</div>
+        <div id="mousePosition">موقعیت موس: -</div>
+    </div>
+
+    <!-- نشانگر بارگذاری -->
+    <div class="loading" id="loadingIndicator">
+        در حال بارگذاری...
+    </div>
+
+    <!-- اسکریپت‌های اصلی -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
+                "reading": "./reading.js",
+                "create": "./create.js"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+
+    <script>
+        // نمایش نشانگر بارگذاری
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'block';
+
+            // پنهان کردن نشانگر بارگذاری پس از بارگذاری کامل صفحه
+            window.addEventListener('load', function() {
+                loadingIndicator.style.display = 'none';
+            });
+        });
+
+        // مدیریت کلیک‌های دکمه‌ها
+        document.getElementById('resetView').addEventListener('click', function() {
+            // این تابع در main.js پیاده‌سازی خواهد شد
+            window.resetView && window.resetView();
+        });
+
+        document.getElementById('toggleGrid').addEventListener('click', function() {
+            // این تابع در main.js پیاده‌سازی خواهد شد
+            window.toggleGrid && window.toggleGrid();
+        });
+
+        document.getElementById('toggleWireframe').addEventListener('click', function() {
+            // این تابع در main.js پیاده‌سازی خواهد شد
+            window.toggleWireframe && window.toggleWireframe();
+        });
+    </script>
+</body>
+</html>
